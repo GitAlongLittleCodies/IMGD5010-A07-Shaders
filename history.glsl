@@ -1,18 +1,20 @@
-// SOURCE CODE
-// https://github.com/shawnlawson/The_Force/blob/gh-pages/shaderExperiments/RadialChromeEggs.frag
-
+// too much strobe action
 void main () {
-    vec2 st = uv(); 
-    vec2 stN = uvN();
-    float theta = atan(st.x, st.y)/PI2 +.5; 
-    float phi = log(length(st)) * .5;
+    // pixel state
+    vec2 state = uv(); 
+    vec2 stateN = uvN();
+    float theta = pow(state.x, state.y); 
+    float phi = step(length(state), bands.x * 3. * fract(time));
     vec3 c = black;
 
-    float d = phi * voronoi(rotate(st, vec2(0.0, -2.), time * .1) * 7.) - time * .5 + bands.x;
-    c = sin( d * 11. + bands.y * orange);
+    float d = phi - time * .5 + bands.x;
+    c = sin( d * 11. + bands.y * orange) * 0.3;
 
-    vec3 bb = texture2D(backbuffer, stN).rgb;
+    // vec3 bb = texture2D(backbuffer, stateN).rgb;
 
 
     gl_FragColor = vec4(c, 1.0);
 }
+
+// SOURCE CODE
+// https://github.com/shawnlawson/The_Force/blob/gh-pages/shaderExperiments/RadialChromeEggs.frag
