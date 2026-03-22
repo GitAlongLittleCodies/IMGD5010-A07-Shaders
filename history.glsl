@@ -1,26 +1,33 @@
 void main () {
+    vec2 st = uv(); 
     vec2 stN = uvN();
-    vec2 st = uv();
-    vec3 color = black;
-    float x = 0.3;
-    float y = 0.05;
-    vec4 texture = texture2D(channel0,  stN).rgba;
-    vec3 superCircle = black;
-    vec3 shape = black;
+    vec3 c = black*.3;
 
-    color += circle(x, y, .5 * bands.z, 0.7) * white -0.5;
-    color += circle(x, y, .7 * (1.1*bands.y), .5) * white*0.5 * bands.x * 5.;
-    
-    superCircle += circle(0.028, -0.02, 0.829, 0.22);
-    superCircle += circle(0.028, -0.02, 0.829, 0.15) -blue;
-    
-    shape += box(vec2(0., 0.), vec2(0.1, 0.1), .0001 + .2, .01) * teal;
-    
-    
-    color =  mix(color, superCircle, 0.95);
-    
-    vec3 fade = 1.0 - stN.x * 0.9 * black;
-    
-	gl_FragColor = vec4(color * fade, 0.5);
+    // st = rotate(st, vec2(0.), time);
+    float f = voronoi(st * 5. * bands.x + 500.);
+    c += step(bands.y, f) * blue;
+    // when audio is on, uncomment the above two lines and comment out the below two lines
+    // float f = voronoi(st * 3.  + time) ;
+    // c += step(.5, f) * teal;
 
+
+    // st = rotate(st, vec2(0.), time);
+    // float f2 = voronoi((st) * 3.1 * bands.z + time);
+    // c += step(bands.z, f2) * pink;
+    // when audio is on, uncomment the above two lines and comment out the below two lines
+    // float f2 = voronoi((st) * 3.1  + time);
+    // c += step(.5, f2) * pink;
+
+    // st = rotate(st, vec2(0.), time);
+    // float f3 = voronoi(st * 3.2 * bands.w + vec2(0,time *2.));
+    // c += step(bands.w, f3) * blue;
+    // when audio is on, uncomment the above two lines and comment out the below two lines
+    // float f3 = voronoi(st * 3.2 + vec2(0,time *2.));
+    // c += step(.5, f3) * blue;
+    
+    vec3 bb = texture2D(backbuffer, stN).rgb * black;
+    c += bb;
+
+
+    gl_FragColor = vec4(c, 1.0);
 }
