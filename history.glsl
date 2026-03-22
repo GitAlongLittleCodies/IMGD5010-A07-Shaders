@@ -5,17 +5,22 @@ void main () {
     float x = 0.3;
     float y = 0.05;
     vec4 texture = texture2D(channel0,  stN).rgba;
-    vec3 hiker = black;
+    vec3 superCircle = black;
+    vec3 shape = black;
 
     color += circle(x, y, .5 * bands.z, 0.7) * white -0.5;
     color += circle(x, y, .7 * (1.1*bands.y), .5) * white*0.5 * bands.x * 5.;
     
-    hiker += circle(0.028, -0.02, 0.829, 0.) * bands.x * 0.1;
+    superCircle += circle(0.028, -0.02, 0.829, 0.22);
+    superCircle += circle(0.028, -0.02, 0.829, 0.15) -blue;
+    
+    shape += box(vec2(0., 0.), vec2(0.1, 0.1), .0001 + .2, .01) * teal;
     
     
-    color = hiker + mix(color, vec3(texture), 0.95);
+    color =  mix(color, superCircle, 0.95);
     
     vec3 fade = 1.0 - stN.x * 0.9 * black;
     
-	gl_FragColor = vec4(color * fade , 0.5);
+	gl_FragColor = vec4(color * fade, 0.5);
+
 }
