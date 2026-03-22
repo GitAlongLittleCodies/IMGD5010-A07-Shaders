@@ -1,20 +1,18 @@
-// too much strobe action
 void main () {
-    // pixel state
-    vec2 state = uv(); 
-    vec2 stateN = uvN();
-    float theta = pow(state.x, state.y); 
-    float phi = step(length(state), bands.x * 3. * fract(time));
-    vec3 c = black;
+    vec2 stN = uvN();
+    vec2 st = uv();
+    vec3 color = black;
+    float x = 0.3;
+    float y = 0.05;
+    vec4 front = texture2D(channel0,  stN).rgba;
 
-    float d = phi - time * .5 + bands.x;
-    c = sin( d * 11. + bands.y * orange) * 0.3;
-
-    // vec3 bb = texture2D(backbuffer, stateN).rgb;
-
-
-    gl_FragColor = vec4(c, 1.0);
+    color += circle(x, y, .5 * bands.z, 0.7) * white -0.5;
+    color += circle(x, y, .7 * (1.1*bands.y), .5) * white*0.5 * bands.x * 5.;
+    
+    
+    color = mix(color, vec3(front), 0.95);
+    
+    vec3 fade = 1.0 - stN.x * 0.9 * black;
+    
+	gl_FragColor = vec4(color * fade , 0.5);
 }
-
-// SOURCE CODE
-// https://github.com/shawnlawson/The_Force/blob/gh-pages/shaderExperiments/RadialChromeEggs.frag
