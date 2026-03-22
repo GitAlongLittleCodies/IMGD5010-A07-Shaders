@@ -2,4 +2,5 @@
 
 # IMGD 5010 &bull; Assignment 07: Shaders
 
-### [Sketch & Edit](#) -or- [Sketch Only](#) | [file](#)
+### [VIDEO](#) | [CODE](#)
+
