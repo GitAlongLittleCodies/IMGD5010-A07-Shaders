@@ -1,11 +1,11 @@
 void main () {
-    vec2 st = uv(); 
+    vec2 st = uv() - 5.; 
     vec2 stN = uvN();
-    vec3 c = black*.3;
+    vec3 c = black;
 
     // st = rotate(st, vec2(0.), time);
-    float f = voronoi(st * 5. * bands.x + 500.);
-    c += step(bands.y, f) * blue;
+    float f = kale(st * bands.y, 0.3) * 3.;
+    c += step(bands.y * 0.14, f*0.5) * blue * 1.5;
     // when audio is on, uncomment the above two lines and comment out the below two lines
     // float f = voronoi(st * 3.  + time) ;
     // c += step(.5, f) * teal;
